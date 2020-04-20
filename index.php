@@ -1,16 +1,18 @@
 <?php
-    $url = isset($_GET['url']) && $_GET != '' ? $_GET['url'] : '';
+define('CTRLS', "app\\controllers\\");
+define('DS', DIRECTORY_SEPARATOR);
+define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 
-    $url = explode('/', $url);
+use app\Config\Router;
 
-    require_once "../controllers/$url[0].php";
-    
-    $ctrlr = new Controller;
+require_once ROOT . DS . 'app' . DS . 'config' . DS . 'autoloader.php';
 
-    if (count($url) >= 2) {
-        $class_name = $url[0];
-        $func_name = $url[1];
-        call_user_func_array(array($class_name, $func_name), []);
+
+    $url = '';
+    if ($_GET['url']) {
+        $url = $_GET['url'];
     }
+
+    Router::route($url);
 
 ?>

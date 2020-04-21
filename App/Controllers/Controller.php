@@ -8,8 +8,8 @@ use app\views\View;
             
         }
         
-        public function render($viewPath, $data=[]) {
-            View::render($viewPath, $data);
+        public function render($viewName, $data=[]) {
+            View::render($viewName, $data);
         }
     }
 ?>

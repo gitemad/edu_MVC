@@ -4,15 +4,16 @@ namespace app\Config;
     class Router {
         
         public static function route($url) {
+            $url = strtolower($url);
             $url = explode('/', $url);
+            
+            $ctrlrName = CTRLS . ucfirst(array_shift($url)) . 'Controller';
 
-            $ctrlrName = CTRLS . 'Controller';
-            $ctrlr = new $ctrlrName;
-
-            if (count($url) >= 2) {
-                $class_name = $url[0];
-                $func_name = $url[1];
-                call_user_func_array(array($class_name, $func_name), []);
+            if (count($url) >= 1) {
+                $class_name = $ctrlrName;
+                $func_name = array_shift($url);
+                $params = $url;
+                call_user_func_array(array($class_name, $func_name), $params);
             }
         }
     }

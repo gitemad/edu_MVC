@@ -1,16 +1,15 @@
 <?php
 namespace app\controllers;
+use app\views\View;
 
-    class Controller {
+    abstract class Controller {
         
         public function __construct() {
-            $this->welcome();
+            
         }
         
-        public function welcome() {
-            if (true) {
-                echo "Welcome to controller";
-            }
+        public function render($viewPath, $data=[]) {
+            View::render($viewPath, $data);
         }
     }
 ?>

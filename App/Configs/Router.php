@@ -1,19 +1,33 @@
 <?php
 namespace app\Configs;
 
-    class Router {
+use app\views\View;
+
+class Router {
         
         public static function route($url) {
             $url = strtolower($url);
             $url = explode('/', $url);
             
-            $ctrlrName = CTRLS . ucfirst(array_shift($url)) . 'Controller';
+            $class_name = CTRLS . ucfirst(array_shift($url)) . 'Controller';
 
-            if (count($url) >= 1) {
-                $class_name = $ctrlrName;
-                $func_name = array_shift($url);
+            // controller does not exist
+            if (!is_readable($class_name . ".php")) {
+                View::render("404", []);
+                die();
+            }
+
+            if (count($url) >= 1 && $url[0] != '') {
+                $action_name = array_shift($url);
                 $params = $url;
-                call_user_func_array(array($class_name, $func_name), $params);
+                if ($params) {
+                    $controller = new $class_name($action_name, $params);
+                } else {
+                    $controller = new $class_name($action_name);
+                }
+
+            } else {
+                $controller = new $class_name();
             }
         }
     }

@@ -6,7 +6,7 @@ require_once ROOT . DS . 'vendor' . DS . 'autoload.php';
 use app\Configs\Router;
 
     $url = '';
-    if ($_GET['url']) {
+    if (isset($_GET['url'])) {
         $url = $_GET['url'];
     }
     
